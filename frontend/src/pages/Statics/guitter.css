@@ -1,0 +1,12 @@
+@keyframes shimmer {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.shimmer-animation {
+  animation: shimmer 2s linear infinite;
+}
