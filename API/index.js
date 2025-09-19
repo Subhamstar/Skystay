@@ -16,7 +16,8 @@ const booking = require("./controller/booking.js");
 const search = require("./controller/search.js");
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  // origin: "http://localhost:5173",  //edit this as a frontend
+  origin: "https://roombooking-frontend-z9s9.onrender.com/",
   credentials: true,
   optionSuccessStatus: 200,
   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
