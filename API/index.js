@@ -1,6 +1,7 @@
-if (process.env.NODE_ENV != "production") {
+if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
+
 const port = 3000;
 const express = require("express");
 const app = express();
@@ -8,6 +9,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const multer = require("multer");
+
+// controllers
 const auth = require("./controller/auth.js");
 const profile = require("./controller/profile.js");
 const upload = require("./controller/upload.js");
@@ -15,22 +18,38 @@ const listing = require("./controller/listing.js");
 const booking = require("./controller/booking.js");
 const search = require("./controller/search.js");
 
+// ✅ allowed origins
+const allowedOrigins = [
+  "https://roombooking-frontend-z9s9.onrender.com", // production frontend
+  "http://localhost:5173",                          // local dev
+];
+
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: (origin, callback) => {
+    console.log("🔎 Request from origin:", origin); // logs in Render console
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin);
+    } else {
+      callback(new Error("Not allowed by CORS: " + origin));
+    }
+  },
   credentials: true,
-  optionSuccessStatus: 200,
   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
+  optionsSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions))
+// ✅ apply CORS
+app.use(cors(corsOptions));
 
-mongoose.connect(process.env.MONGODB_URL)
-.then((conn )=>{
-  console.log(`Mongodb connected at : ${conn.connection.host}`)
-})
-.catch((e)=>{
-  console.log("Connection Error");
-});
+// MongoDB connection
+mongoose
+  .connect(process.env.MONGODB_URL)
+  .then((conn) => {
+    console.log(`✅ Mongodb connected at: ${conn.connection.host}`);
+  })
+  .catch((e) => {
+    console.log("❌ Connection Error:", e.message);
+  });
 
 // middlewares
 app.use(express.json());
@@ -39,22 +58,24 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 const photoMiddleware = multer({ dest: "uploads" });
 
-// personal details
-app.get("/test", (req, res)=>{
-  res.send("hello")
-})
+// routes
+app.get("/test", (req, res) => {
+  res.send("hello");
+});
+
+// auth
 app.post("/api/register", auth.register);
 app.post("/api/login", auth.login);
 app.post("/api/logout", auth.logout);
 
-// profile details
+// profile
 app.get("/api/profile", profile.getProfile);
 app.get("/api/places", profile.myListedPlaces);
 app.post("/api/places", profile.uploadNewPlace);
 app.put("/api/places", profile.editPlaceDetails);
 app.get("/api/places/:id", profile.placeInDetail);
 
-// uploading images
+// upload
 app.post("/api/upload-by-link", upload.uploadByLink);
 app.post(
   "/api/upload",
@@ -62,19 +83,20 @@ app.post(
   upload.uploadFromDevice
 );
 
-// getting all listings and detail of listing
+// listings
 app.get("/api/listings", listing.getListings);
 app.get("/api/listings/:id", listing.getListingDetail);
 
-// Creating new booking and getting booking details
+// booking
 app.get("/api/booking", booking.getBooking);
 app.post("/api/booking", booking.newBooking);
 app.delete("/api/booking/:id", booking.deleteBooking);
 
-// filter and searching
+// search
 app.get("/api/filter/:category", search.filterByCategory);
 app.get("/api/search", search.filterBySearch);
 
+// start server
 app.listen(port, () => {
-  console.log(`Server is running on Port: ${port}`);
+  console.log(`🚀 Server is running on Port: ${port}`);
 });

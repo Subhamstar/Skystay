@@ -53,7 +53,7 @@ const Navbar = () => {
     <header className="flex justify-between max-[380px]:gap-4 ">
       <div onClick={reRender} className="flex items-center gap-1 max-[200px]:hidden cursor-pointer">
         {icons.logo}
-        <span className="font-bold text-xl max-[630px]:hidden">Skystay</span>
+        <span className="font-bold text-xl max-[630px]:hidden">Abash</span>
       </div>
 
       {!searchClicked ? (
