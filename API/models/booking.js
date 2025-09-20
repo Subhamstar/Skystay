@@ -36,7 +36,7 @@ const bookingSchema = new mongoose.Schema({
     }
 
 })
-
+bookingSchema.index({checkIn:1,checkOut:1})
 const BookingModel = mongoose.model("Booking", bookingSchema)
 
 module.exports = BookingModel

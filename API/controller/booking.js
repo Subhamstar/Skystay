@@ -7,21 +7,40 @@ module.exports.newBooking = async (req, res) => {
     req.body;
   try {
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-      if (err) console.log("not getting user", err);
+      if (err) {
+        console.log("not getting user", err);
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+      const existingBooking = await Booking.findOne({
+        place,
+        $or: [
+          {
+            checkIn: { $lt: new Date(checkOut) }, // existing booking starts before new checkout
+            checkOut: { $gt: new Date(checkIn) }  // existing booking ends after new checkin
+          }
+        ]
+      });
+      if (existingBooking) {
+        return res
+          .status(400)
+          .json({ error: "This place is already booked for the selected dates." });
+      }
       const bookingDoc = await Booking.create({
         place,
-        checkIn,
-        checkOut,
+        checkIn: new Date(checkIn),
+        checkOut: new Date(checkOut),
         mobile,
         numberOfGuests,
         name,
         price,
-        user: userData.id
+        user: userData.id,
       });
+
       res.json(bookingDoc);
     });
   } catch (error) {
     console.log("Error in post booking place", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
