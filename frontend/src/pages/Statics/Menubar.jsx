@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Menubar = ({user}) => {
   return (
-    <div>
+    <div className="bg-white">
       <p className="text-lg text-primary font-semibold text-center">
         Hey, {user.username} 👋
       </p>

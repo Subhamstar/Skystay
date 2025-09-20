@@ -94,7 +94,7 @@ const BookingsPage = () => {
   return (
     <>
       <Account />
-      <div className="flex flex-col items-center mt-4">
+      <div className="h-screen flex flex-col items-center mt-4">
         {bookings?.length > 0 &&
           bookings.map((booking) => (
             <div
