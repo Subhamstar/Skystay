@@ -32,26 +32,37 @@ const BookingWidget = ({ details }) => {
 
 
   async function bookingThisPlace(e) {
-    e.preventDefault();
-    const data = {
-      checkIn,
-      checkOut,
-      name,
-      email,
-      mobile,
-      numberOfGuests,
-      place: details._id,
-      price: numberOfNights * details.price * 1.18,
-      token: user.token,
-    };
-    try {
-      const response = await axios.post("/api/booking", data);
-      const bookingId = response.data._id;
-      setRedirect(`/account/booking/${bookingId}`);
-    } catch (error) {
-      console.log("error sending request", error);
+  e.preventDefault();
+  const data = {
+    checkIn,
+    checkOut,
+    name,
+    email,
+    mobile,
+    numberOfGuests,
+    place: details._id,
+    price: numberOfNights * details.price * 1.18,
+    token: user.token,
+  };
+  try {
+    const response = await axios.post("/api/booking", data);
+    const bookingId = response.data._id;
+    setRedirect(`/account/booking/${bookingId}`);
+  } catch (error) {
+    if (error.response) {
+      // Axios received a response from backend
+      if (error.response.status === 400) {
+        alert(error.response.data.error); // Show "already booked" message
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } else {
+      // No response received, network error
+      alert("Network error. Please check your connection.");
     }
+    console.log("Error sending request", error);
   }
+}
 
   if (redirect) {
     return <Navigate to={redirect} />;

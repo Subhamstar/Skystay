@@ -115,11 +115,11 @@ const BookingsPage = () => {
                   Total price: ₹{booking.price}
                   <button
                     onClick={() => handleCancel(booking._id)}
-                    className="ml-4 bg-pink-600 hover:bg-pink-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-200 ease-in-out"
+                    className="ml-4 bg-pink-600 hover:bg-red-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-200 ease-in-out"
                   >
                     Cancel
                   </button>
-                  <button className="ml-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-200 ease-in-out">
+                  <button className="ml-4 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-200 ease-in-out">
                     Pay now
                   </button>
                 </div>

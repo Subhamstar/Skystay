@@ -44,7 +44,7 @@ function App() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-white overflow-hidden">
+    <div className="relative min-h-screen  overflow-hidden">
       {/* Floating Circles */}
 {/* Floating Circles with Colors */}
 {/* Floating Small Dots with Soft Transparent Glow */}
