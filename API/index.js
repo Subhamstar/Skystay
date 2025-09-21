@@ -2,7 +2,7 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-const port = 3000;
+const port = process.env.port || 3000;
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -24,11 +24,13 @@ const allowedOrigins = [
   "http://localhost:5173",                          // local dev
 ];
 
+
+
 const corsOptions = {
   origin: (origin, callback) => {
-    console.log("🔎 Request from origin:", origin); // logs in Render console
+    console.log("🔎 Request from origin:", origin);
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, origin);
+      callback(null, true); // ✅ instead of callback(null, origin)
     } else {
       callback(new Error("Not allowed by CORS: " + origin));
     }
@@ -38,8 +40,10 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-// ✅ apply CORS
+// ✅ apply CORS + handle preflight
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
+
 
 // MongoDB connection
 mongoose
