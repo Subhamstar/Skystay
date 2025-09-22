@@ -9,7 +9,6 @@ import userContext from "../../../Context/Usercontext";
 const Formpage = () => {
   const { id } = useParams();
   const {user} =  useContext(userContext)
-
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
   const [photos, setPhotos] = useState([]);
@@ -21,7 +20,6 @@ const Formpage = () => {
   const [maxGuests, setMaxGuests] = useState(1);
   const [price, setPrice] = useState(100);
   const [city, setCity] = useState(""); //
-
   const [category, setCategory] = useState("");
 
   const navigate = useNavigate();
