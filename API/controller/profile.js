@@ -47,6 +47,7 @@ module.exports.editPlaceDetails = async (req, res) => {
     checkOut,
     maxGuests,
     category,
+    city,
     token
   } = req.body;
 
@@ -67,6 +68,7 @@ module.exports.editPlaceDetails = async (req, res) => {
           checkIn,
           checkOut,
           maxGuests,
+          city,
           category,
         });
         await placeDoc.save();
@@ -91,6 +93,7 @@ module.exports.uploadNewPlace = async (req, res) => {
     checkOut,
     maxGuests,
     category,
+    city,
     token
   } = req.body;
   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
@@ -108,6 +111,7 @@ module.exports.uploadNewPlace = async (req, res) => {
       checkOut,
       maxGuests,
       category,
+      city,
     });
     res.json(placeDoc);
   });
