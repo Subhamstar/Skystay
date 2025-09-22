@@ -93,7 +93,7 @@ const Formpage = () => {
   }, [id]);
 
   return (
-    <form onSubmit={savePlace} className="w-full sm:w-5/6 md:w-3/5 m-auto bg-gray-100 p-4 rounded-3xl mt-4">
+    <form onSubmit={savePlace} className="mb-8 w-full sm:w-5/6 md:w-3/5 m-auto bg-gray-100 p-4 rounded-3xl mt-4">
       {preInput(
         "Title",
         "Title for your place should be short and catchy as in advertisement"
@@ -106,13 +106,6 @@ const Formpage = () => {
         className="w-full rounded-full px-4 py-2 border mt-2 "
       />
       {preInput("Address", "Address to this place")}
-      {/* <input
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-        type="text"
-        placeholder="Address"
-        className="w-full rounded-full px-4 py-2 border mt-2"
-      /> */}
       <div className="grid sm:grid-cols-2 gap-4">
           <input
           value={address}
