@@ -5,7 +5,6 @@ import axios from "axios";
 import Photos from "./Photos";
 import PropertyDropdown from "./Category";
 import userContext from "../../../Context/Usercontext";
-
 const Formpage = () => {
   const { id } = useParams();
   const {user} =  useContext(userContext)
@@ -64,10 +63,8 @@ const Formpage = () => {
     } else {
       await axios.post("/api/places", placeData);
     }
-
     navigate("/account/places");
   }
-
   useEffect(() => {
     if (!id) {
       return;
