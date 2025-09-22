@@ -60,7 +60,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="backdrop-blur-md bg-gradient-to-r from-purple-50 via-white to-blue-50 shadow-lg sticky top-0 z-50 px-6 py-3 flex justify-between items-center transition-all duration-500">
+    <header className="backdrop-blur-md bg-gradient-to-r from-purple-50 via-white to-blue-50 shadow-xl sticky top-0 z-50 px-6 py-3 flex justify-between items-center transition-all duration-500 rounded-t-xl">
       
       {/* Logo */}
       <div
