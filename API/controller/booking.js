@@ -1,6 +1,7 @@
 const Booking = require("../models/booking.js");
 const jwt = require("jsonwebtoken");
-const jwtSecret = "l209385023jksdbnfkq039oans8925oadkjnf2389";
+const dotenv=require("dotenv");
+const jwtSecret = process.env.JWT;
 
 module.exports.newBooking = async (req, res) => {
   let { place, checkIn, checkOut, mobile, numberOfGuests, name, price, token } =
