@@ -53,6 +53,10 @@ mongoose
   .catch((e) => {
     console.log("❌ Connection Error:", e.message);
   });
+  app.listen(port, () => {
+  console.log(`🚀 Server is running on Port: ${port}`);
+});
+
 
 // middlewares
 app.use(express.json());
@@ -100,6 +104,3 @@ app.get("/api/filter/:category", search.filterByCategory);
 app.get("/api/search", search.filterBySearch);
 
 // start server
-app.listen(port, () => {
-  console.log(`🚀 Server is running on Port: ${port}`);
-});
