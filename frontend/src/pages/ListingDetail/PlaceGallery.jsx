@@ -6,73 +6,79 @@ const PlaceGallery = ({ details }) => {
 
   if (showPhotos) {
     return (
-      <div className="w-full absolute bg-black inset-0 min-h-screen z-50">
-        <div className="p-8 bg-black grid gap-4">
-          <div>
-            <h1 className="text-white text-2xl mr-48">{details.title}</h1>
+      <div className="fixed inset-0 bg-black/95 backdrop-blur-md z-50 overflow-y-auto">
+        <div className="p-6 md:p-10">
+          {/* Header with Title + Close Button */}
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-white text-2xl font-bold">{details.title}</h1>
             <button
-              onClick={() => {
-                setShowPhotos(false);
-              }}
-              className="fixed right-12 top-10 text-black flex gap-1 bg-gray-400 px-2 py-1 rounded-lg items-center font-semibold shadow shadow-gray-500"
+              onClick={() => setShowPhotos(false)}
+              className="flex items-center gap-2 bg-white/90 hover:bg-white text-black px-3 py-1.5 rounded-lg font-semibold shadow transition"
             >
-              {icons.cross}Close photos
+              {icons.cross}
+              Close
             </button>
           </div>
-          {details?.photos?.length > 0 &&
-            details.photos.map((photo) => (
-              <div className="" key={photo}>
+
+          {/* Photos Grid */}
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {details?.photos?.map((photo, idx) => (
+              <div
+                key={idx}
+                className="overflow-hidden rounded-xl shadow-lg hover:scale-[1.02] transition-transform duration-300"
+              >
                 <img
                   src={photo}
-                  alt="image"
-                  className="sm:w-full md:w-4/5 m-auto"
+                  alt={`photo-${idx}`}
+                  className="w-full h-full object-cover"
                 />
               </div>
             ))}
+          </div>
         </div>
       </div>
     );
   }
+
   return (
-    <div className="w-full gap-2 grid grid-cols-[2fr_1fr] mt-4 rounded-3xl overflow-hidden relative">
-      <div>
+    <div className="w-full gap-2 grid grid-cols-[2fr_1fr] mt-6 rounded-3xl overflow-hidden relative shadow-xl">
+      {/* Main Photo */}
+      <div className="overflow-hidden">
         {details?.photos?.[0] && (
           <img
-            onClick={() => {
-              setShowPhotos(true);
-            }}
-            className="aspect-square object-cover cursor-pointer w-full"
+            onClick={() => setShowPhotos(true)}
+            className="aspect-square object-cover cursor-pointer w-full hover:scale-105 transition-transform duration-300"
             src={details?.photos[0]}
             alt="image"
           />
         )}
       </div>
+
+      {/* Side Photos */}
       <div className="grid">
         {details?.photos?.[1] && (
           <img
-            onClick={() => {
-              setShowPhotos(true);
-            }}
-            className="aspect-square cursor-pointer w-full h-full object-cover"
+            onClick={() => setShowPhotos(true)}
+            className="aspect-square cursor-pointer w-full h-full object-cover hover:scale-105 transition-transform duration-300"
             src={details?.photos[1]}
             alt="image"
           />
         )}
         <div className="overflow-hidden">
-          {details?.photos?.[1] && (
+          {details?.photos?.[2] && (
             <img
-              onClick={() => {
-                setShowPhotos(true);
-              }}
-              className="aspect-square object-cover relative top-2 cursor-pointer w-full h-full"
+              onClick={() => setShowPhotos(true)}
+              className="aspect-square object-cover cursor-pointer w-full h-full hover:scale-105 transition-transform duration-300"
               src={details?.photos[2]}
               alt="image"
             />
           )}
         </div>
       </div>
+
+      {/* Show all photos button */}
       <button
-        className="absolute flex gap-1 items-center bottom-2 right-2 border-2 border-black px-4 py-1 rounded-md bg-white font-semibold"
+        className="absolute flex gap-2 items-center bottom-3 right-3 border px-4 py-1.5 rounded-lg bg-white/90 hover:bg-white text-black font-semibold shadow-lg transition"
         onClick={() => setShowPhotos(true)}
       >
         {icons.list}
