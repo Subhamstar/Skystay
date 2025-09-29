@@ -48,14 +48,14 @@ app.options("*", cors(corsOptions));
 mongoose
   .connect(process.env.MONGODB_URL)
   .then((conn) => {
-    console.log(`✅ Mongodb connected at: ${conn.connection.host}`);
+    console.log(`Mongodb connected at: ${conn.connection.host}`);
+    app.listen(port, () => {
+      console.log(`Server is running on Port: ${port}`);
+    });
   })
   .catch((e) => {
     console.log("❌ Connection Error:", e.message);
   });
-  app.listen(port, () => {
-  console.log(`🚀 Server is running on Port: ${port}`);
-});
 
 
 // middlewares
