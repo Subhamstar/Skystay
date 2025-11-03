@@ -28,7 +28,7 @@ const placeSchema = new mongoose.Schema({
         type: Array,
     },
     extraInfo: {
-        type: String,
+        type: String,// used to define house rules
     },
     checkIn: {
         type: Number
