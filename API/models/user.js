@@ -21,7 +21,28 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type:String,
-        enum:['user','admin']
+        enum:['user','admin'],
+        default:'user'
+    },
+    mobileNumber: {
+        type: String,
+        default: null
+    },
+    aadharNumber: {
+        type: String,
+        default: null
+    },
+    hostVerified: {
+        type: Boolean,
+        default: false
+    },
+    verificationOTP: {
+        type: String,
+        default: null
+    },
+    otpExpiry: {
+        type: Date,
+        default: null
     }
 })
 

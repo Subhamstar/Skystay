@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import userContext from "../../Context/Usercontext";
 import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = useContext(userContext);
+  const { setUser, setIsHostMode } = useContext(userContext);
+  const [searchParams] = useSearchParams();
+  const isHostLogin = searchParams.get("mode") === "host";
   const navigate = useNavigate()
 
   const handleLogin = async (e) => {
@@ -22,7 +24,11 @@ const Login = () => {
       } else if (userInfo.data === "password incorrect") {
         alert("password Incorrect");
       } else {
-        localStorage.setItem("userInfo", JSON.stringify(userInfo.data))
+        localStorage.setItem("userInfo", JSON.stringify(userInfo.data));
+        if (isHostLogin) {
+          localStorage.setItem("hostMode", "true");
+          setIsHostMode(true);
+        }
         setUser(userInfo.data);
         navigate("/")
         alert("successfully login");
@@ -40,7 +46,7 @@ const Login = () => {
             className="bg-white  rounded px-8 pt-6 pb-8 mb-4"
             onSubmit={handleLogin}
           >
-            <h1 className="text-3xl text-center mb-6">Login</h1>
+            <h1 className="text-3xl text-center mb-6">{isHostLogin ? "Host Login" : "Guest Login"}</h1>
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"

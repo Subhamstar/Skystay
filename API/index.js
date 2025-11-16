@@ -17,6 +17,7 @@ const upload = require("./controller/upload.js");
 const listing = require("./controller/listing.js");
 const booking = require("./controller/booking.js");
 const search = require("./controller/search.js");
+const hostVerification = require("./controller/hostVerification.js");
 
 // ✅ allowed origins
 const allowedOrigins = [
@@ -74,6 +75,10 @@ app.get("/test", (req, res) => {
 app.post("/api/register", auth.register);
 app.post("/api/login", auth.login);
 app.post("/api/logout", auth.logout);
+
+// host verification
+app.post("/api/host/verify", hostVerification.sendVerificationOTP);
+app.post("/api/host/verify-otp", hostVerification.verifyOTP);
 
 // profile
 app.get("/api/profile", profile.getProfile);
