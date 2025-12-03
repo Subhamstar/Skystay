@@ -55,6 +55,17 @@ const Profile = () => {
                 >
                   Logout
                 </button>
+
+                {/* Show Host Dashboard button only for users with host/admin role */}
+                {(user?.role === "admin" || user?.role === "host") && (
+                  <button
+                    className="px-6 py-2 bg-amber-600 text-white rounded-full shadow-md hover:bg-amber-700 transition flex items-center gap-2 font-medium"
+                    onClick={() => navigate("/host")}
+                  >
+                    🏠 Host Dashboard
+                  </button>
+                )}
+
                 <button
                   className="px-6 py-2 bg-primary text-white rounded-full shadow-md hover:bg-primary-dark transition flex items-center gap-2 font-medium"
                   onClick={() => navigate("/account/edit")}

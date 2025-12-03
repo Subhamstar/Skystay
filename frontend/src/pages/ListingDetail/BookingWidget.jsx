@@ -145,7 +145,7 @@ const BookingWidget = ({ details }) => {
       <button
         disabled={!name || !email || !mobile}
         onClick={(e) => bookingThisPlace(e)}
-        className={`bg-primary text-white font-semibold w-full py-2 rounded-2xl mt-1 disabled:opacity-70`}
+        className={`bg-primary text-white font-semibold w-full py-2 rounded-2xl mt-1 disabled:opacity-70 cursor-pointer hover:bg-primary`}
       >
         Book this place
         {numberOfNights > 0 && (

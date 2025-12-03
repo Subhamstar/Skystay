@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./chatbot.css";
+import userContext from "../../Context/Usercontext";
 
 export default function ChatWindow({ onClose }) {
   const [messages, setMessages] = useState([
@@ -8,6 +9,9 @@ export default function ChatWindow({ onClose }) {
 
   const [step, setStep] = useState("checkLogin");
   const [input, setInput] = useState("");
+
+  const ctx = useContext(userContext);
+  const ctxUser = ctx?.user;
 
   const bookingData = {
     city: "",
@@ -28,7 +32,8 @@ export default function ChatWindow({ onClose }) {
 
     // ---------------------- STEP 1: CHECK LOGIN ----------------------
     if (step === "checkLogin") {
-      const token = localStorage.getItem("token");
+      const localUser = JSON.parse(localStorage.getItem("userInfo") || "null");
+      const token = ctxUser?.token || localUser?.token || localStorage.getItem("token");
     // make Enter send the message (install once)
     if (!window.__chat_enter_handler_installed) {
         window.__chat_enter_handler_installed = true;
@@ -73,27 +78,15 @@ export default function ChatWindow({ onClose }) {
         chatInputArea.style.borderTop = chatInputArea.style.borderTop || "1px solid #eee";
     }
       if (!token) {
-        pushMessage("bot", "You are not logged in. Please login first.");
+        pushMessage("bot", "You are not logged in. Please login first (go to /login).");
         setInput("");
         return;
       }
 
-      // verify token with backend
-      const res = await fetch("/api/profile", {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-        credentials: "include",
-      });
-
-      if (res.status !== 200) {
-        pushMessage("bot", "Please login again.");
-        setInput("");
-        return;
-      }
-
-      const user = await res.json();
+      // Prefer the user object from context/local storage rather than always re-checking
+      const userObj = ctxUser || JSON.parse(localStorage.getItem("userInfo") || "null");
       bookingData.token = token;
-      bookingData.userName = user?.name;
+      bookingData.userName = userObj?.name || "";
 
       pushMessage("bot", "Great! Please enter the city you want to book in.");
       setStep("city");
@@ -128,7 +121,9 @@ export default function ChatWindow({ onClose }) {
       setInput("");
 
       const roomsRes = await fetch(
-        `/api/search?city=${bookingData.city}`
+        `/api/search?city=${encodeURIComponent(bookingData.city)}&checkIn=${encodeURIComponent(
+          bookingData.checkIn
+        )}&checkOut=${encodeURIComponent(bookingData.checkOut)}`
       );
 
       const rooms = await roomsRes.json();

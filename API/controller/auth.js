@@ -36,6 +36,7 @@ module.exports.login = async (req, res) => {
               _id: userDoc._id,
               username: userDoc.username,
               email: userDoc.email,
+              role: userDoc.role, 
               token: token,
             })
           }
