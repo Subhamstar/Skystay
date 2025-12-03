@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   backend:
-    build: ./server
+    build: ./servAPIer
     container_name: mern-backend
     ports:
       - "5000:5000"
@@ -10,14 +10,13 @@ services:
       - MONGO_URI=mongodb://mongo:27017/roomsdb
     depends_on:
       - mongo
-
   frontend:
-    build: ./client
+    build: ./frontend
     container_name: mern-frontend
     ports:
       - "3000:80"
     depends_on:
-      - backend
+      - frontend
 
   mongo:
     image: mongo
